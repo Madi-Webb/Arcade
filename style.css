@@ -3,16 +3,21 @@ body {
 
 }
 
+h2 {
+    text-align: center;
+}
+
 .column-container {
     display: flex;
     justify-content: space-evenly;
-    align-items: flex-center;
+    align-items: center;
 }
 
 .column {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    align-items: center;
  }
 
 .game-board {
@@ -42,4 +47,31 @@ body {
 
 .red {
     background-color: red;
+}
+
+.profile-pic {
+    width: 200pt;
+    height: 250pt;
+}
+
+.new-game-btn {
+    background-color: blue;
+    color: white;
+    border-radius: 5px;
+    width: 150px;
+    height: 50px;
+    border: 5px solid navy;
+    margin: 5px 5px 5px 5px;
+    text-align: center;
+    vertical-align: bottom;
+    font-size: 18pt;
+}
+
+.selector {
+    margin: 0px 5px 5px 5px;
+    width: 150px;
+    text-align: center;
+    font-size: 12pt;
+    border-radius: 2px;
+    border: 2px solid navy;
 }
