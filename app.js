@@ -10,48 +10,53 @@ let gameState = {
     turn: PLAYER1,
     playerOneName: "Me",
     playerTwoName: "Computer",
+    playerOneColor: "red",
+    playerTwoColor: "yellow",
     makeMove: function( col ) {
-        // console.log("MAKING MVOES: " + col);
-        // console.log( this.board[col] );
+        console.log("MAKING MVOES: " + col);
+        console.log( this.board[col] );
+        console.log( this.board );
 
         let emptyRow;
         for (let i = this.numColumns; i >= 0; i--) {
             if (this.board[col][i] == 0) {
-                emptyRow = i;
-                // console.log("Empty row: " + emptyRow);
+                    emptyRow = i;
+                console.log("Empty row: " + emptyRow);
                 break;
             }
         }
         let slotNum = (col * this.numRows) + emptyRow;
         if (emptyRow >= 0 && emptyRow <= this.numRows) {
-            // console.log("slot# " + slotNum );
+            console.log("slot# " + slotNum );
             let targetSlot = document.getElementsByClassName("open-slot")[ slotNum ];
 
             if (this.turn == PLAYER1) {
-                targetSlot.classList.add("red");
+                targetSlot.classList.add(this.playerOneColor);
                 this.board[col][emptyRow] = PLAYER1;
                 this.turn = PLAYER2;
             } else {
-                targetSlot.classList.add("yellow");
+                targetSlot.classList.add(this.playerTwoColor);
                 this.board[col][emptyRow] = PLAYER2;
                 this.turn = PLAYER1;
             }
             this.board[col][emptyRow] = PLAYER1;
-            // console.log( this.board );
+            console.log( this.board );
         }
     },
 
     newGame: function() {
         console.log("new game");
-        let gameBoard = document.getElementsByClassName("game-board");
+        let gameBoard = document.getElementsByClassName("game-board")[0];
         console.log(gameBoard);
         console.log(middleContainer);
-        // middleContainer.removeChild(gameBoard); TODO: make this work
-        
-        
-        this.board = [];
-
+        // middleContainer.innerHTML="";
+        middleContainer.removeChild(gameBoard); // TODO: make this work
         buildBoard();
+        
+        // this.board = [];
+        console.log(this.board);
+
+
     }
 
 }
@@ -68,6 +73,7 @@ let rightContainer = document.getElementsByClassName("column")[2];
 function buildBoard () {
     let gameBoard = document.createElement("div");
     gameBoard.classList.add("game-board");
+    gameState.board = [];
 
     for ( let i = 0; i <= gameState.numColumns-1; i++ ) {
         let colDiv = document.createElement("div");
@@ -102,6 +108,21 @@ function playerSetup() {
     redPlayerName.textContent = gameState.playerOneName;
     leftContainer.appendChild(redPlayerName);
 
+    let redPlayerNameInput = document.createElement("input");
+    leftContainer.appendChild(redPlayerNameInput);
+    let changeNameBtn = document.createElement("button");
+    changeNameBtn.textContent = "Change Name";
+    changeNameBtn.classList.add("change-name-btn");
+    leftContainer.appendChild(changeNameBtn);
+
+    changeNameBtn.addEventListener("click", function() {
+        console.log("name change");
+        console.log(redPlayerNameInput.value);
+        redPlayerName.textContent = redPlayerNameInput.value;
+        gameState.playerOneName = redPlayerNameInput.value;
+    });
+    
+    
     let yelPlayerImg = document.createElement("img");
     yelPlayerImg.classList.add("profile-pic");
     yelPlayerImg.src = "images/yellow-player-silhouette.jpg";
@@ -111,26 +132,26 @@ function playerSetup() {
     rightContainer.appendChild(yelPlayerName);
 }
 
+// function nameInputSetup(nameDisplay) {
+//     let redPlayerNameInput = document.createElement("input");
+//     leftContainer.appendChild(redPlayerNameInput);
+//     let changeNameBtn = document.createElement("button");
+//     changeNameBtn.textContent = "Change Name";
+//     changeNameBtn.classList.add("change-name-btn");
+//     leftContainer.appendChild(changeNameBtn);
+
+//     changeNameBtn.addEventListener("click", function() {
+//         console.log("name change");
+//         console.log(redPlayerNameInput.value);
+//         nameDisplay = redPlayerNameInput.value;
+//     });
+// }
+
 
 function gameSetup() {
     // new game button
-    let newGameBtn = document.createElement("button");
-    newGameBtn.classList.add("new-game-btn");
-    newGameBtn.textContent = "New Game";
-    middleContainer.appendChild(newGameBtn);
+    let newGameBtn = document.getElementById("new-game-btn");
+    console.log(newGameBtn);
     newGameBtn.addEventListener("click", gameState.newGame);
-
-    // game type selector
-    let gameSelector = document.createElement("select");
-    gameSelector.classList.add("selector");
-    let singlePlayerOption = document.createElement("option");
-    singlePlayerOption.text = "Single Player";
-    gameSelector.appendChild(singlePlayerOption);
-    let multiplayerOption = document.createElement("option");
-    multiplayerOption.text = "Multiplayer";
-    gameSelector.appendChild(multiplayerOption);
-
-    middleContainer.appendChild(gameSelector);
-
 }
 
