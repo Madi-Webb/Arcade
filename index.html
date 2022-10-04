@@ -10,7 +10,16 @@
 </head>
 <body>
     <div class="column-container">
-        <div class="column"></div>
+
+        <div class="column">
+            <div class="hidden red your-turn">Your turn!</div>
+            <img class="profile-pic" src="images/red-player-silhouette.jpg">
+            <h2 id="red-player-name">Player 1</h2>
+            <label>Enter name:</label>
+            <input type="text">
+            <button class="red change-name-btn">Change Name</button>
+        </div>
+
         <div class="column">
             <button id="new-game-btn">New Game</button>
             <select class="selector">
@@ -18,7 +27,18 @@
                 <option>Multiplayer</option>
             </select>
         </div>
-        <div class="column"></div>
+
+        <div class="column">
+            <div class="hidden yellow your-turn">Your turn!</div>
+            <img class="profile-pic" src="images/yellow-player-silhouette.jpg">
+            <h2 id="yel-player-name">Player 2</h2>
+            <div id="yel-name-input"> 
+                <label>Enter name:</label>
+                <input type="text">
+                <button class="yellow change-name-btn">Change Name</button>
+            </div>
+        </div>
+        
     </div>
 </body>
 </html>

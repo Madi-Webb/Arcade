@@ -1,10 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Peralta&display=swap');
 body {
     background-color: #f7f7f7;
-
-}
-
-h2 {
-    text-align: center;
 }
 
 .column-container {
@@ -18,7 +14,7 @@ h2 {
     flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
- }
+}
 
 .game-board {
     display: flex;
@@ -26,10 +22,6 @@ h2 {
     padding: 10px 10px 10px 10px;
     border: 5px solid navy;
     border-radius: 5px;
-}
-
-.row {
-    display: flex;
 }
 
 .open-slot {
@@ -41,17 +33,57 @@ h2 {
     margin: 5px 5px 5px 5px;
 }
 
+.hidden {
+    visibility: hidden;
+}
+
 .yellow {
     background-color: yellow;
+    color: black;
 }
 
 .red {
     background-color: red;
+    color: white;
+}
+
+.selector {
+    margin: 0px 5px 5px 5px;
+    width: 150px;
+    text-align: center;
+    font-size: 12pt;
+    border-radius: 2px;
+    border: 2px solid navy;
 }
 
 .profile-pic {
-    width: 200pt;
-    height: 250pt;
+    width: 150pt;
+    height: 200pt;
+}
+
+.your-turn {
+    border-radius: 5px;
+    border: 2px solid navy;
+    font-size: 18pt;
+    padding: 5pt 5pt 5pt 5pt;
+}
+
+.congrats {
+    font-family: 'Peralta', cursive;
+    font-size: 48pt;
+    color: navy;
+    border-radius: 5px;
+    padding: 5px 5px 5px 5px;
+    border: 5px solid navy;
+    margin: 5px 5px 5px 5px;
+}
+
+.change-name-btn {
+    border-radius: 2px;
+    border: 2px solid navy;
+    margin: 2px 2px 2px 2px;
+    text-align: center;
+    float: right;
 }
 
 #new-game-btn {
@@ -67,23 +99,16 @@ h2 {
     font-size: 18pt;
 }
 
-.change-name-btn {
-    background-color: blue;
-    color: white;
-    border-radius: 2px;
-    /* width: 150px;
-    height: 50px; */
-    border: 2px solid navy;
-    margin: 2px 2px 2px 2px;
+#red-player-name {
     text-align: center;
-    float: right;
 }
 
-.selector {
-    margin: 0px 5px 5px 5px;
-    width: 150px;
+#yel-player-name {
     text-align: center;
-    font-size: 12pt;
-    border-radius: 2px;
-    border: 2px solid navy;
+}
+
+#yel-name-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
