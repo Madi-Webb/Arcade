@@ -27,6 +27,8 @@ let gameState = {
                 break;
             }
         }
+        if (emptyRow == undefined) return; // stops "move" when column is full
+
         // Determine the chosen column and empty row's corresponding slot number, get it from the DOM
         let slotNum = (col * this.numRows) + emptyRow;
         if (emptyRow >= 0 && emptyRow <= this.numRows) {
@@ -144,7 +146,7 @@ let gameState = {
         gameState.gameActive = true;
         gameState.winner = 0;
 
-        if (gameState.gameMode == "Single Player") gameState.changeTurns( PLAYER1 ); // player 1 goes first
+        if (gameState.gameMode == "Single Player") gameState.changeTurns( PLAYER1 ); // player 1 goes first against computer
     }
 
 }
