@@ -1,18 +1,18 @@
 // GAME STATE
 const EMPTY = 0;
-const PLAYER1 = 1;
-const PLAYER2 = 2;
+const PETER = 1;
+const MILES = 2;
 
 let gameState = {
     board: [],
     numColumns: 7,
     numRows: 6,
     gameActive: true,
-    winner: 0,
-    turn: PLAYER1,
+    winner: EMPTY,
+    turn: PETER,
     gameMode: "Single Player",
-    playerOneName: "Peter",
-    playerTwoName: "Miles",
+    peterName: "Peter",
+    milesName: "Miles",
     
     makeMove: function( col ) {
         if (!this.gameActive) return; // stops moves from being made after win
@@ -33,27 +33,24 @@ let gameState = {
             let targetSlot = document.getElementsByClassName("open-slot")[ slotNum ];
 
             // Set color and claim spot on board
-            if (this.turn == PLAYER1) {
-                console.log("player one move")
+            if (this.turn == PETER) {
                 targetSlot.classList.add("peter-slot");
-                this.board[col][emptyRow] = PLAYER1;
+                this.board[col][emptyRow] = PETER;
             } else {
-                console.log("player two move")
                 targetSlot.classList.add("miles-slot");
-                this.board[col][emptyRow] = PLAYER2;
+                this.board[col][emptyRow] = MILES;
             }
         }
 
         // Check for a win
         if (this.checkWin()) {
             this.gameActive = false;
-            if (this.winner == 1) congratulateWinner( this.playerOneName );
-            else congratulateWinner( this.playerTwoName );
+            this.winner == PETER ? congratulateWinner( this.peterName ) : congratulateWinner( this.milesName );
         }
 
         // Change turns
         this.changeTurns();
-        if (this.gameMode == "Single Player" && this.turn == PLAYER2) {
+        if (this.gameMode == "Single Player" && this.turn == MILES) {
             // Computer makes a move
             this.computerMove();
         }
@@ -61,6 +58,7 @@ let gameState = {
 
     computerMove: function() {
         let chosenCol = Math.floor(Math.random() * (this.numColumns)); // TODO: make smarter choice
+        // setTimeout(this.makeMove(chosenCol), 3000); // TODO: make this work ugh
         this.makeMove(chosenCol);
     },
 
@@ -110,32 +108,29 @@ let gameState = {
     changeTurns: function ( setTurn ) {
         if (!this.gameActive) return; // stop from switching pointlessly after win
 
-        let redPlayer = document.getElementsByClassName("player")[0];
-        let redPlayerMsg = document.getElementsByClassName("youre-up")[0];
-        let yelPlayer = document.getElementsByClassName("player")[1];
-        let yelPlayerMsg = document.getElementsByClassName("youre-up")[1];
+        let peterPlayer = document.getElementsByClassName("player")[0];
+        let peterPlayerMsg = document.getElementsByClassName("youre-up")[0];
+        let milesPlayer = document.getElementsByClassName("player")[1];
+        let milesPlayerMsg = document.getElementsByClassName("youre-up")[1];
 
-        // Switch from player 1 to player 2
-        if (this.turn == PLAYER1 && setTurn != PLAYER1) {
-            console.log("switching to 2")
-            redPlayer.classList.remove("red-background");
-            redPlayerMsg.classList.add("hidden");
-            yelPlayerMsg.classList.remove("hidden");
-            yelPlayer.classList.add("black-background");
-            this.turn = PLAYER2;
-        // Switch from player 2 to player 1
+        // Switch from player peter to player miles
+        if (this.turn == PETER && setTurn != PETER) {
+            peterPlayer.classList.remove("red-background");
+            peterPlayerMsg.classList.add("hidden");
+            milesPlayerMsg.classList.remove("hidden");
+            milesPlayer.classList.add("black-background");
+            this.turn = MILES;
+        // Switch from player miles to player peter
         } else {
-            console.log("switching to 1");
-            redPlayer.classList.add("red-background");
-            redPlayerMsg.classList.remove("hidden");
-            yelPlayerMsg.classList.add("hidden");
-            yelPlayer.classList.remove("black-background");
-            this.turn = PLAYER1;
+            peterPlayer.classList.add("red-background");
+            peterPlayerMsg.classList.remove("hidden");
+            milesPlayerMsg.classList.add("hidden");
+            milesPlayer.classList.remove("black-background");
+            this.turn = PETER;
         }
     },
 
     newGame: function() {
-        console.log('NEW GAME PRESS')
         // Remove game board and congrats display from the middle container
         let gameBoard = document.getElementsByClassName("game-board")[0];
         middleContainer.removeChild(gameBoard);
@@ -146,7 +141,7 @@ let gameState = {
         }
 
         // Determine single or multiplayer game
-        let gameModeSelect = document.getElementsByClassName("selector")[0];
+        let gameModeSelect = document.getElementById("selector");
         gameState.gameMode = gameModeSelect.value;
 
         // Rebuild game board and reset gameState values
@@ -155,10 +150,11 @@ let gameState = {
         gameState.gameActive = true;
         gameState.winner = 0;
 
-        if (gameState.gameMode == "Single Player") gameState.changeTurns( PLAYER1 ); // player 1 goes first against computer
+        if (gameState.gameMode == "Single Player") gameState.changeTurns( PETER ); // peter goes first single player
     }
 
 }
+
 
 // Page Set up
 document.addEventListener("DOMContentLoaded", gameSetup);
@@ -195,57 +191,61 @@ function buildBoard () {
     middleContainer.appendChild(gameBoard);
 }
 
+
 function playerSetup() {
-    // Change the Red Player's Name
-    let redChangeNameBtn = document.getElementsByClassName("change-name-btn")[0];
-    redChangeNameBtn.addEventListener("click", function() {
-        let redPlayerNameInput = document.getElementsByTagName("input")[0];
-        let redPlayerNameDisplay = document.getElementById("red-player-name");
-        redPlayerNameDisplay.textContent = redPlayerNameInput.value;
-        gameState.playerOneName = redPlayerNameInput.value;
+    // changing peters name
+    let peterChangeNameButton = document.getElementsByClassName("change-name-btn")[0];
+    peterChangeNameButton.addEventListener("click", function() {
+        let peterNameInput = document.getElementsByTagName("input")[0];
+        let peterNameDisplay = document.getElementById("peter-name");
+        peterNameDisplay.textContent = peterNameInput.value;
+        gameState.peterName = peterNameInput.value;
     });
-    // Change the Yellow Player's Name
-    let yelChangeNameBtn = document.getElementsByClassName("change-name-btn")[1];
-    yelChangeNameBtn.addEventListener("click", function() {
-        let yelPlayerNameInput = document.getElementsByTagName("input")[1];
-        let yelPlayerNameDisplay = document.getElementById("yel-player-name");
-        yelPlayerNameDisplay.textContent = yelPlayerNameInput.value;
-        gameState.playerTwoName = yelPlayerNameInput.value;
+    // changing miles name
+    let milesChangeNameButton = document.getElementsByClassName("change-name-btn")[1];
+    milesChangeNameButton.addEventListener("click", function() {
+        let milesNameInput = document.getElementsByTagName("input")[1];
+        let milesNameDisplay = document.getElementById("miles-name");
+        milesNameDisplay.textContent = milesNameInput.value;
+        gameState.milesName = milesNameInput.value;
     });
 
-    // Toggle name change option for second player when playing single player mode
-    let yelPlayerNameInputOption = document.getElementById("yel-name-input");
-    let yelPlayerNameDisplay = document.getElementById("yel-player-name");
+    // toggle name change option for second player when playing single player mode
+    let milesNameInputOption = document.getElementById("miles-name-change");
+    let milesNameDisplay = document.getElementById("miles-name");
     if (gameState.gameMode === "Single Player") {
-        yelPlayerNameInputOption.classList.add("hidden");
-        yelPlayerNameDisplay.textContent = "Computer";
-        gameState.playerTwoName = "Computer";
+        milesNameInputOption.classList.add("hidden");
+        milesNameDisplay.textContent = "Miles";
+        gameState.milesName = "Miles";
     } else {
-        yelPlayerNameInputOption.classList.remove("hidden");
-        if (gameState.playerTwoName == "Computer") {
-            gameState.playerTwoName = "Player 2";
-            yelPlayerNameDisplay.textContent = gameState.playerTwoName;
+        milesNameInputOption.classList.remove("hidden");
+        if (gameState.milesName == "Miles") {
+            gameState.milesName = "Miles";
+            milesNameDisplay.textContent = gameState.milesName;
         }
     }
 }
 
+
 function gameSetup() {
     // new game button
     let newGameBtn = document.getElementById("new-game-btn");
-    console.log(newGameBtn)
     newGameBtn.addEventListener("click", gameState.newGame);
 
-    // red goes first on refresh
-    let yellowPlayer = document.getElementsByClassName("player")[1];
-    yellowPlayer.classList.remove("black-background");
-    let redPlayerMsg = document.getElementsByClassName("youre-up")[0];
-    redPlayerMsg.classList.remove("hidden");
+    // peter goes first on refresh
+    let milesPlayer = document.getElementsByClassName("player")[1];
+    milesPlayer.classList.remove("black-background");
+    let milesPlayerMsg = document.getElementsByClassName("youre-up")[1];
+    milesPlayerMsg.classList.add("hidden");
+
+    let peterPlayerMsg = document.getElementsByClassName("youre-up")[0];
+    peterPlayerMsg.classList.remove("hidden");
 }
+
 
 function congratulateWinner( winner ) {
     let congratsDisplay = document.createElement("div");
     congratsDisplay.classList.add("congrats");
-    // congratsDisplay.classList.add("winnersColor");
     congratsDisplay.innerHTML = `Congratulations ${winner}!`;
 
     let gameBoard = document.getElementsByClassName("game-board")[0];
