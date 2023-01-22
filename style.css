@@ -1,7 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Peralta&display=swap');
-body {
-    background-color: #f7f7f7;
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marvel&display=swap');
+
+:root {
+    /* COLOR PALETTE */
+    --red: #cb0d11;
+    --blue: #191fbb;
+    --navy: #110d6b;
+    --black: #150b17;
 }
+
+body {
+    color: var(--black);
+    background-color: var(--black);
+    background: url('https://images8.alphacoders.com/929/929202.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Marvel', sans-serif;
+}
+
+/* containers */
 
 .column-container {
     display: flex;
@@ -16,21 +36,87 @@ body {
     align-items: center;
 }
 
+h1 {
+    font-family: 'Bangers', cursive;
+    font-size: 48px;
+    margin: 10px;
+}
+
+h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 36px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--red);
+    padding: 10px;
+    border-radius: 20px;
+    margin: 0px;
+}
+
+select {
+    cursor: pointer;
+    background-color: var(--blue);
+    color: white;
+    padding: 5px;
+    font-family: 'Marvel', sans-serif;
+}
+
+option {
+    background-color: var(--blue);
+}
+
+input {
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#new-game-btn {
+    cursor: pointer;
+    background-color: var(--blue);
+    color: white;
+    border: 5px solid var(--navy);
+    border-radius: 20px;
+    padding: 10px;
+    margin-bottom: 5px;
+    font-size: 22pt;
+    font-family: 'Marvel', sans-serif;
+}
+
 .game-board {
     display: flex;
-    background-color: blue;
-    padding: 10px 10px 10px 10px;
-    border: 5px solid navy;
-    border-radius: 5px;
+    background-color: var(--blue);
+    padding: 10px;
+    border: 5px solid var(--navy);
+    border-radius: 20px;
 }
 
 .open-slot {
+    cursor: pointer;
     background-color: white;
     border-radius: 50%;
-    width: 75px;
-    height: 75px;
-    border: 5px solid black;
-    margin: 5px 5px 5px 5px;
+    width: 60px;
+    height: 60px;
+    border: 5px solid var(--navy);
+    margin: 5px;
+}
+
+.peter-slot {
+    cursor: not-allowed;
+    background-color: var(--red);
+    background-image: url('https://i.imgur.com/jgwOlJ4.png');
+    display: inline-block;
+    background-position: 50% 50%;
+    background-size: cover;
+}
+
+.miles-slot {
+    cursor: not-allowed;
+    background-color: var(--black);
+    background-image: url('https://i.imgur.com/PWelUdT.png');
+    display: inline-block;
+    background-position: 50% 50%;
+    background-size: cover;
 }
 
 .hidden {
@@ -38,14 +124,32 @@ body {
 }
 
 .yellow {
-    background-color: yellow;
+    background-color: green;
     color: black;
 }
 
 .red {
-    background-color: red;
+    background-color: var(--red);
+    color: #150b17;
+}
+
+
+.red-background {
+    background-color: rgba(203, 13, 17, 0.25);
     color: white;
 }
+
+.redder-background {
+    background-color: rgba(203, 13, 17, 0.75);
+    color: white;
+}
+
+.black-background {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+
 
 .selector {
     margin: 0px 5px 5px 5px;
@@ -56,16 +160,27 @@ body {
     border: 2px solid navy;
 }
 
-.profile-pic {
-    width: 150pt;
-    height: 200pt;
+.player-pic {
+    height: 300pt;
 }
 
-.your-turn {
-    border-radius: 5px;
-    border: 2px solid navy;
+.player {
+    border-radius: 20px;
+    padding: 10px;
+    /* margin-bottom: 20px; */
+}
+
+.youre-up {
     font-size: 18pt;
-    padding: 5pt 5pt 5pt 5pt;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.5);
+    font-family: 'Bangers', cursive;
+    color: var(--red);
+    padding: 10px;
+    border-radius: 20px;
+    text-align: center;
+    margin: 10px;
+
 }
 
 .congrats {
@@ -79,25 +194,16 @@ body {
 }
 
 .change-name-btn {
-    border-radius: 2px;
-    border: 2px solid navy;
-    margin: 2px 2px 2px 2px;
-    text-align: center;
-    float: right;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 3px solid var(--black);
+    margin: 5px;
+    padding: 5px;
+    font-family: 'Marvel', sans-serif;
+    font-weight: bold;
 }
 
-#new-game-btn {
-    background-color: blue;
-    color: white;
-    border-radius: 5px;
-    width: 150px;
-    height: 50px;
-    border: 5px solid navy;
-    margin: 5px 5px 5px 5px;
-    text-align: center;
-    vertical-align: bottom;
-    font-size: 18pt;
-}
+
 
 #red-player-name {
     text-align: center;

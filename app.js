@@ -11,10 +11,8 @@ let gameState = {
     winner: 0,
     turn: PLAYER1,
     gameMode: "Single Player",
-    playerOneName: "Player 1",
-    playerTwoName: "Player 2",
-    playerOneColor: "red",
-    playerTwoColor: "yellow",
+    playerOneName: "Peter",
+    playerTwoName: "Miles",
     
     makeMove: function( col ) {
         if (!this.gameActive) return; // stops moves from being made after win
@@ -36,10 +34,12 @@ let gameState = {
 
             // Set color and claim spot on board
             if (this.turn == PLAYER1) {
-                targetSlot.classList.add(this.playerOneColor);
+                console.log("player one move")
+                targetSlot.classList.add("peter-slot");
                 this.board[col][emptyRow] = PLAYER1;
             } else {
-                targetSlot.classList.add(this.playerTwoColor);
+                console.log("player two move")
+                targetSlot.classList.add("miles-slot");
                 this.board[col][emptyRow] = PLAYER2;
             }
         }
@@ -47,8 +47,8 @@ let gameState = {
         // Check for a win
         if (this.checkWin()) {
             this.gameActive = false;
-            if (this.winner == 1) congratulateWinner( this.playerOneName, this.playerOneColor );
-            else congratulateWinner( this.playerTwoName, this.playerTwoColor );
+            if (this.winner == 1) congratulateWinner( this.playerOneName );
+            else congratulateWinner( this.playerTwoName );
         }
 
         // Change turns
@@ -110,23 +110,32 @@ let gameState = {
     changeTurns: function ( setTurn ) {
         if (!this.gameActive) return; // stop from switching pointlessly after win
 
-        let redTurn = document.getElementsByClassName("your-turn")[0];
-        let yelTurn = document.getElementsByClassName("your-turn")[1];
+        let redPlayer = document.getElementsByClassName("player")[0];
+        let redPlayerMsg = document.getElementsByClassName("youre-up")[0];
+        let yelPlayer = document.getElementsByClassName("player")[1];
+        let yelPlayerMsg = document.getElementsByClassName("youre-up")[1];
 
         // Switch from player 1 to player 2
         if (this.turn == PLAYER1 && setTurn != PLAYER1) {
-            redTurn.classList.add("hidden");
-            yelTurn.classList.remove("hidden");
+            console.log("switching to 2")
+            redPlayer.classList.remove("red-background");
+            redPlayerMsg.classList.add("hidden");
+            yelPlayerMsg.classList.remove("hidden");
+            yelPlayer.classList.add("black-background");
             this.turn = PLAYER2;
         // Switch from player 2 to player 1
         } else {
-            redTurn.classList.remove("hidden");
-            yelTurn.classList.add("hidden");
+            console.log("switching to 1");
+            redPlayer.classList.add("red-background");
+            redPlayerMsg.classList.remove("hidden");
+            yelPlayerMsg.classList.add("hidden");
+            yelPlayer.classList.remove("black-background");
             this.turn = PLAYER1;
         }
     },
 
     newGame: function() {
+        console.log('NEW GAME PRESS')
         // Remove game board and congrats display from the middle container
         let gameBoard = document.getElementsByClassName("game-board")[0];
         middleContainer.removeChild(gameBoard);
@@ -159,6 +168,7 @@ document.addEventListener("DOMContentLoaded", playerSetup);
 let leftContainer = document.getElementsByClassName("column")[0];
 let middleContainer = document.getElementsByClassName("column")[1];
 let rightContainer = document.getElementsByClassName("column")[2];
+
 
 function buildBoard () {
     let gameBoard = document.createElement("div");
@@ -220,19 +230,22 @@ function playerSetup() {
 }
 
 function gameSetup() {
-    // red goes first on refresh
-    let redTurn = document.getElementsByClassName("your-turn")[0];
-    redTurn.classList.remove("hidden");
-
     // new game button
     let newGameBtn = document.getElementById("new-game-btn");
+    console.log(newGameBtn)
     newGameBtn.addEventListener("click", gameState.newGame);
+
+    // red goes first on refresh
+    let yellowPlayer = document.getElementsByClassName("player")[1];
+    yellowPlayer.classList.remove("black-background");
+    let redPlayerMsg = document.getElementsByClassName("youre-up")[0];
+    redPlayerMsg.classList.remove("hidden");
 }
 
-function congratulateWinner( winner, winnersColor ) {
+function congratulateWinner( winner ) {
     let congratsDisplay = document.createElement("div");
     congratsDisplay.classList.add("congrats");
-    congratsDisplay.classList.add(winnersColor);
+    // congratsDisplay.classList.add("winnersColor");
     congratsDisplay.innerHTML = `Congratulations ${winner}!`;
 
     let gameBoard = document.getElementsByClassName("game-board")[0];
